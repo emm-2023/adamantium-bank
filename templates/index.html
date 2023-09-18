@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Adamantium Bank</title>
     <script src="../static/htmx.min.js"></script>
+    <link href="../static/styles.css" rel="stylesheet">
     <script>
         function start_over() {
             document.getElementById("response-area").innerHTML = "";
@@ -10,25 +12,28 @@
         }
     </script>
 </head>
+
 <body>
-    <h1>Bank</h1>
+    <div id="content-area">
+        <h1 id="heading">Adamantium Bank</h1>
         <form id="application_form" hx-post="/apply" hx-target="#response-area">
-            <input type="text" name="firstname" placeholder="First Name"><br>
-            <input type="text" name="lastname"placeholder="Last Name"><br>
-            <input type="text" name="addressone"placeholder="Address Line 1"><br>
-            <input type="text" name="addresstwo"placeholder="Address Line 2"><br>
+            <input id="first_input" type="text" name="firstname" placeholder="First Name"><br>
+            <input type="text" name="lastname" placeholder="Last Name"><br>
+            <input type="text" name="addresstwo" placeholder="Address Line 2"><br>
+            <input type="text" name="addressone" placeholder="Address Line 1"><br>
             <input type="text" name="addresscity" placeholder="City"><br>
             <input type="text" name="addressstate" placeholder="State"><br>
             <input type="text" name="addresszip" placeholder="ZIP Code"><br>
             <input type="text" name="addresscountry" placeholder="Country"><br>
             <input type="password" name="ssn" placeholder="SSN"><br>
-            <input type="email" name="email" placeholder="Email Address"><br>
-            <input type="date" name="dob" placeholder="Date of birth"><br>
+            <input id="penultimate_input" type="email" name="email" placeholder="Email Address"><br>
+            <input id="last_input" type="date" name="dob" placeholder="Date of birth"><br>
             <br><input type="submit" value="Apply">
-        </form>
-        <button value="Clear" onclick="start_over()">Start Over</button>
+        </form><button id="start_over" onclick="start_over()">Start Over</button>
         <br>
         <div id="response-area">
         </div>
-    </body>
+    </div>
+</body>
+
 </html>

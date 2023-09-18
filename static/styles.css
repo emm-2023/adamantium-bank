@@ -1,0 +1,50 @@
+#content-area {
+    margin-left: 40%;
+    margin-right: 40%;
+    background-color: #5f8977;
+    border-radius: 20px;
+    box-shadow: 3px 3px 5px rgb(4, 46, 5)
+}
+
+h1 {
+    text-align: center;
+    font-family: "Arial";
+    text-shadow: 2px 2px 5px rgb(1, 12, 2);
+    color: goldenrod; 
+}
+
+form {
+    margin-left: 15px;
+}
+
+#response-area {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+#start_over {
+    margin-left: 40%;
+    margin-bottom: 10px
+}
+
+#response_data {
+    padding-bottom: 10px
+}
+
+#heading {
+    padding-top: 10px
+}
+
+#first_input {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+#last_input {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+#penultimate_input {
+    border-bottom-right-radius: 5px;
+}
