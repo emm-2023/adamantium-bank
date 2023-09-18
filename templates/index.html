@@ -2,11 +2,33 @@
 <html>
 <head>
     <title>Adamantium Bank</title>
+    <script src="../static/htmx.min.js"></script>
+    <script>
+        function start_over() {
+            document.getElementById("response-area").innerHTML = "";
+            document.getElementById("application_form").reset()
+        }
+    </script>
 </head>
 <body>
-    <h2>Welcome To The Most Resilient Financial Institution</h2>
-</body>
-<form>
-    <input type="text" placeholder="First Name">
-</form>
+    <h1>Bank</h1>
+        <form id="application_form" hx-post="/apply" hx-target="#response-area">
+            <input type="text" name="firstname" placeholder="First Name"><br>
+            <input type="text" name="lastname"placeholder="Last Name"><br>
+            <input type="text" name="addressone"placeholder="Address Line 1"><br>
+            <input type="text" name="addresstwo"placeholder="Address Line 2"><br>
+            <input type="text" name="addresscity" placeholder="City"><br>
+            <input type="text" name="addressstate" placeholder="State"><br>
+            <input type="text" name="addresszip" placeholder="ZIP Code"><br>
+            <input type="text" name="addresscountry" placeholder="Country"><br>
+            <input type="password" name="ssn" placeholder="SSN"><br>
+            <input type="email" name="email" placeholder="Email Address"><br>
+            <input type="date" name="dob" placeholder="Date of birth"><br>
+            <br><input type="submit" value="Apply">
+        </form>
+        <button value="Clear" onclick="start_over()">Start Over</button>
+        <br>
+        <div id="response-area">
+        </div>
+    </body>
 </html>
