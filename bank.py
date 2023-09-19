@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-import us, re
+import re, us
 
 app = Flask(__name__)
 states = [state.abbr for state in us.states.STATES]
