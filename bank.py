@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, jsonify
 import re, us, requests, json
-from app_package import auth
 
 app = Flask(__name__)
+#a US states convenience
 states = [state.abbr for state in us.states.STATES]
 
 #for use in the API call
