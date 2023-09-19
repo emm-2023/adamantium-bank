@@ -17,6 +17,11 @@
     <div id="content-area">
         <h1 id="heading">Adamantium Bank</h1>
         <form id="application_form" hx-post="/apply" hx-target="#response-area">
+            <textarea name="base_64_str" 
+                placeholder="enter your base_64 encoded string to apply"
+                rows="3"
+                cols="30"></textarea>
+                <br>
             <input id="first_input" type="text" name="firstname" placeholder="First Name"><br>
             <input type="text" name="lastname" placeholder="Last Name"><br>
             <input type="text" name="addresstwo" placeholder="Address Line 2"><br>

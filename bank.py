@@ -7,11 +7,6 @@ states = [state.abbr for state in us.states.STATES]
 
 #for use in the API call
 alloy_base_url = "https://sandbox.alloy.co/v1/evaluations"
-alloy_auth_str = f'Basic {auth.auth_string}'
-alloy_headers = {
-    'Content-Type': 'application/json',
-    'Authorization': alloy_auth_str
-}
 
 # i'm not a regex expert; i looked these up
 
@@ -57,10 +52,12 @@ def evaluation_get(data_body):
     }
     #turn that dict to json, which the endpoint expects
     payload_to_json = json.dumps(payload)
-    headers = alloy_headers
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Basic {data_body["base_64_str"]}'
+    }
 
     response = requests.request("POST",url,headers=headers,data=payload_to_json)
-    print("response", response.json())
 
 
 
@@ -80,10 +77,9 @@ def apply():
         valid_email = is_valid_email(form_data['email'])
         valid_dob = is_valid_dob(form_data['dob'])
         valid_country_code = is_valid_country(form_data['addresscountry'])
-        all_input_valid = False not in [v for v in [valid_us_state,valid_zip_code,valid_ssn,valid_email,valid_dob]]
+        all_input_valid = False not in [v for v in [valid_us_state,valid_zip_code,valid_ssn,valid_email,valid_dob,valid_country_code]]
         if all_input_valid:
             req_json_body = jsonify(form_data)
-            print("request ",req_json_body.get_json())
             alloy_response = evaluation_get(req_json_body.json)
 
 
