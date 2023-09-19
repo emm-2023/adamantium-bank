@@ -58,6 +58,7 @@ def evaluation_get(data_body):
     }
 
     response = requests.request("POST",url,headers=headers,data=payload_to_json)
+    return response
 
 
 
@@ -67,8 +68,10 @@ def index():
 
 @app.route('/apply', methods=['POST'])
 def apply():
+    return_str = ''
     if request.method=="POST":
         form_data = request.form.to_dict()
+
         #some input validations
         #equal True if valid, equal False if not valid
         valid_us_state = form_data['addressstate'] in states
@@ -78,16 +81,34 @@ def apply():
         valid_dob = is_valid_dob(form_data['dob'])
         valid_country_code = is_valid_country(form_data['addresscountry'])
         all_input_valid = False not in [v for v in [valid_us_state,valid_zip_code,valid_ssn,valid_email,valid_dob,valid_country_code]]
+
         if all_input_valid:
+            #format req to json
             req_json_body = jsonify(form_data)
+            
+            #create and execute API call
             alloy_response = evaluation_get(req_json_body.json)
 
-
-
-
-
-
-    return render_template("response_area.html", response="submitted - we're working")
+            #take the API response and do things
+            if alloy_response.json()['status_code']==201|200:   
+                #depending on the outcome value ('Approve', 'Deny', 'Manual Review'), render various things in the response area
+                choice = alloy_response.json()['summary']['outcome']
+                print(choice)
+                match choice:    
+                    case 'Denied':
+                        return_str = "We're sorry, your application was unsuccessful."
+                    case 'Approved':
+                        return_str = "Congratulations, you were approved!"
+                    case 'Manual Review':
+                        return_str = "Thanks for submitting your application, we’ll be in touch shortly."
+            else:
+                return_str = "Seems like there's some weirdness here on our end."
+        else:
+            return_str = "Looks like some input was not valid"
+    else:
+        return_str = "Seems like there's some weirdness here on our end."       
+    
+    return render_template("response_area.html", response=return_str)
 
 if __name__ == '__main__':
     app.run(
