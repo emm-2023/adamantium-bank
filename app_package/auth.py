@@ -1,0 +1,1 @@
+auth_string = 'M1RUVnpWMkw5YzRqQUxwbzBUeGhhZGlBN3RqdWFXaXI6Mm81QUpPVGZPU1RxWHgyc0MzbW1vU2dzVnRkSkZ4VW4= '

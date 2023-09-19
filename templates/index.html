@@ -24,9 +24,21 @@
             <input type="text" name="addresscity" placeholder="City"><br>
             <input type="text" name="addressstate" placeholder="State"><br>
             <input type="text" name="addresszip" placeholder="ZIP Code"><br>
-            <input type="text" name="addresscountry" placeholder="Country"><br>
-            <input type="password" name="ssn" placeholder="SSN"><br>
-            <input id="penultimate_input" type="email" name="email" placeholder="Email Address"><br>
+            <label for="addresscountry">we only operate in the US</label>
+            <input type="text" 
+                name="addresscountry" 
+                placeholder="Country"
+                pattern="[uU][sS]"><br>
+            <label for="ssn">(SSN: type your input as 'xxxxxxxxx' excluding dashes)</label>
+            <input type="password" 
+                name="ssn" 
+                pattern='^\d{3}\d{2}\d{4}$'
+                placeholder="SSN"><br>
+            <input id="penultimate_input" 
+                type="email" 
+                name="email" 
+                placeholder="Email Address"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"><br>
             <input id="last_input" type="date" name="dob" placeholder="Date of birth"><br>
             <br><input type="submit" value="Apply">
         </form><button id="start_over" onclick="start_over()">Start Over</button>
