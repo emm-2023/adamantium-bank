@@ -82,9 +82,14 @@ def apply():
         valid_email = is_valid_email(form_data['email'])
         valid_dob = is_valid_dob(form_data['dob'])
         valid_country_code = is_valid_country(form_data['addresscountry'])
-        all_input_valid = False not in [v for v in [valid_us_state,valid_zip_code,valid_ssn,valid_email,valid_dob,valid_country_code]]
+        
+        validations_list = [v for v in [valid_us_state,valid_zip_code,valid_ssn,valid_email,valid_dob,valid_country_code]]
+        all_input_valid = False not in validations_list
+        no_input_valid = True not in validations_list
 
-        if all_input_valid:
+        if no_input_valid:
+            return_str = 'Looks like there may be a few issues with your entries.'
+        elif all_input_valid:
             #format req to json
             req_json_body = jsonify(form_data)
             
