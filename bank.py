@@ -99,23 +99,22 @@ def apply():
             #format req to json
             req_json_body = jsonify(form_data)
             
-            #create and execute API call
             try:
+                #create and execute API call
                 alloy_response = evaluation_get(req_json_body.json)
                 alloy_response.raise_for_status()
-                #take the API response and do things
-                if alloy_response.json()['status_code']==201|200:   
-                    #depending on the outcome value ('Approve', 'Deny', 'Manual Review'), render various things in the response area
-                    choice = alloy_response.json()['summary']['outcome']
-                    match choice:    
-                        case 'Denied':
-                            return_str = "We're sorry, your application was unsuccessful."
-                        case 'Approved':
-                            return_str = "Congratulations, you were approved!"
-                        case 'Manual Review':
-                            return_str = "Thanks for submitting your application, we’ll be in touch shortly."                
-                else:
-                    return_str = "Apologies, it seems like there's an issue here on our end."
+                
+                #take the API response and do things 
+                #depending on the outcome value ('Approve', 'Deny', 'Manual Review'), render various things in the response area
+                choice = alloy_response.json()['summary']['outcome']
+                match choice:    
+                    case 'Denied':
+                        return_str = "We're sorry, your application was unsuccessful."
+                    case 'Approved':
+                        return_str = "Congratulations, you were approved!"
+                    case 'Manual Review':
+                        return_str = "Thanks for submitting your application, we’ll be in touch shortly."
+            #handle http errors
             except HTTPError as e:
                 print("Http error occured: ", e)
                 return_str = "Apologies, it seems like there's an issue here on our end."
@@ -125,13 +124,6 @@ def apply():
             except InvalidURL as e:
                 print("There was an issue with the URL validity: ", e)
                 return_str = "Apologies, it seems like there's an issue here on our end."
-            
-            #no API call was made because we caught an issue with input
-            if valid_us_state==False:
-                return_str = "Please enter a valid US state."
-            else:
-                return_str = "Looks like some input was not valid"
-        
         #very unlikely scenario where niether all_input_valid nor no_input_valid resolved to True
         else:
             return_str = "Seems like there's some weirdness here on our end."       
