@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, jsonify
-import re, us, requests, json
+import re, us, requests, json, os
 
 app = Flask(__name__)
+port = int(os.environ.get("PORT", 8080))
 #a US states convenience
 states = [state.abbr for state in us.states.STATES]
 
@@ -93,7 +94,6 @@ def apply():
             if alloy_response.json()['status_code']==201|200:   
                 #depending on the outcome value ('Approve', 'Deny', 'Manual Review'), render various things in the response area
                 choice = alloy_response.json()['summary']['outcome']
-                print(choice)
                 match choice:    
                     case 'Denied':
                         return_str = "We're sorry, your application was unsuccessful."
@@ -112,6 +112,7 @@ def apply():
 
 if __name__ == '__main__':
     app.run(
+        host='0.0.0.0',
         port=8080,
-        debug=True
+        debug=False
         )
