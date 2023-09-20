@@ -3,7 +3,6 @@ import re, us, requests, json, os
 from waitress import serve
 
 app = Flask(__name__)
-port = int(os.environ.get("PORT", 8080))
 #a US states convenience
 states = [state.abbr for state in us.states.STATES]
 
@@ -115,5 +114,5 @@ if __name__ == '__main__':
     serve(
         app,
         host='0.0.0.0',
-        port=8080
+        port=8000
         )
