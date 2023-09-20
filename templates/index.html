@@ -47,7 +47,8 @@
                 name="email" 
                 placeholder="Email Address"
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"><br>
-            <input id="last_input" type="date" name="dob" placeholder="Date of birth"><br>
+            <label id="dob-label" for="dob">Date Of Birth</label>
+            <input id="last_input" type="date" name="dob" default="11/03/1985"><br>
             <br><input type="submit" value="Apply">
         </form><button id="start_over" onclick="start_over()">Start Over</button>
         <br>

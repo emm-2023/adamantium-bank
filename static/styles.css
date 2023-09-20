@@ -6,7 +6,7 @@
     box-shadow: 3px 3px 5px rgb(4, 46, 5)
 }
 
-h1, #response_data, #country-label, #ssn-label, #apply-here {
+h1, #response_data, #country-label, #ssn-label, #apply-here, #dob-label {
     text-align: center;
     font-family: "Arial";
     text-shadow: 2px 2px 5px rgb(1, 12, 2);
