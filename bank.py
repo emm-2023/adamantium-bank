@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 import re, us, requests, json, os
+from waitress import serve
 
 app = Flask(__name__)
 port = int(os.environ.get("PORT", 8080))
@@ -111,8 +112,8 @@ def apply():
     return render_template("response_area.html", response=return_str)
 
 if __name__ == '__main__':
-    app.run(
+    serve(
+        app,
         host='0.0.0.0',
-        port=8080,
-        debug=False
+        port=8080
         )
