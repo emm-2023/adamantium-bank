@@ -104,6 +104,8 @@ def apply():
                         return_str = "Thanks for submitting your application, we’ll be in touch shortly."
             else:
                 return_str = "Seems like there's some weirdness here on our end."
+        elif valid_us_state==False:
+            return_str = "Please enter a valid US state."
         else:
             return_str = "Looks like some input was not valid"
     else:
