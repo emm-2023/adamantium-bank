@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import re, us, requests, json, os
 from waitress import serve
+from requests.exceptions import HTTPError, InvalidHeader, InvalidURL
 
 app = Flask(__name__)
 port = int(os.environ.get("PORT", 8000))
@@ -58,9 +59,21 @@ def evaluation_get(data_body):
         'Content-Type': 'application/json',
         'Authorization': f'Basic {data_body["base_64_str"]}'
     }
-
-    response = requests.request("POST",url,headers=headers,data=payload_to_json)
-    return response
+    
+    try:
+        response = requests.request("POST",url,headers=headers,data=payload_to_json)
+        response.raise_for_status()
+        return response
+    except HTTPError as e:
+        print("Http error occured: ", e)
+        return None
+    except InvalidHeader as e:
+        print("There was an invalid header: ", e )
+        return None
+    except InvalidURL as e:
+        print("There was an issue with the URL validity: ", e)
+        return None
+    
 
 
 
@@ -106,9 +119,9 @@ def apply():
                     case 'Approved':
                         return_str = "Congratulations, you were approved!"
                     case 'Manual Review':
-                        return_str = "Thanks for submitting your application, we’ll be in touch shortly."
+                        return_str = "Thanks for submitting your application, we’ll be in touch shortly."                
             else:
-                return_str = "Seems like there's some weirdness here on our end."
+                return_str = "Apologies, it seems like there's an issue here on our end."
         elif valid_us_state==False:
             return_str = "Please enter a valid US state."
         else:
