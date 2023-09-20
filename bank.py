@@ -60,19 +60,8 @@ def evaluation_get(data_body):
         'Authorization': f'Basic {data_body["base_64_str"]}'
     }
     
-    try:
-        response = requests.request("POST",url,headers=headers,data=payload_to_json)
-        response.raise_for_status()
-        return response
-    except HTTPError as e:
-        print("Http error occured: ", e)
-        return None
-    except InvalidHeader as e:
-        print("There was an invalid header: ", e )
-        return None
-    except InvalidURL as e:
-        print("There was an issue with the URL validity: ", e)
-        return None
+    response = requests.request("POST",url,headers=headers,data=payload_to_json)
+    return response
     
 
 
@@ -97,7 +86,11 @@ def apply():
         valid_country_code = is_valid_country(form_data['addresscountry'])
         
         validations_list = [v for v in [valid_us_state,valid_zip_code,valid_ssn,valid_email,valid_dob,valid_country_code]]
+        
+        #is the input all valid?
         all_input_valid = False not in validations_list
+
+        #is the input not at all valid?
         no_input_valid = True not in validations_list
 
         if no_input_valid:
@@ -107,27 +100,41 @@ def apply():
             req_json_body = jsonify(form_data)
             
             #create and execute API call
-            alloy_response = evaluation_get(req_json_body.json)
-
-            #take the API response and do things
-            if alloy_response.json()['status_code']==201|200:   
-                #depending on the outcome value ('Approve', 'Deny', 'Manual Review'), render various things in the response area
-                choice = alloy_response.json()['summary']['outcome']
-                match choice:    
-                    case 'Denied':
-                        return_str = "We're sorry, your application was unsuccessful."
-                    case 'Approved':
-                        return_str = "Congratulations, you were approved!"
-                    case 'Manual Review':
-                        return_str = "Thanks for submitting your application, we’ll be in touch shortly."                
-            else:
+            try:
+                alloy_response = evaluation_get(req_json_body.json)
+                alloy_response.raise_for_status()
+                #take the API response and do things
+                if alloy_response.json()['status_code']==201|200:   
+                    #depending on the outcome value ('Approve', 'Deny', 'Manual Review'), render various things in the response area
+                    choice = alloy_response.json()['summary']['outcome']
+                    match choice:    
+                        case 'Denied':
+                            return_str = "We're sorry, your application was unsuccessful."
+                        case 'Approved':
+                            return_str = "Congratulations, you were approved!"
+                        case 'Manual Review':
+                            return_str = "Thanks for submitting your application, we’ll be in touch shortly."                
+                else:
+                    return_str = "Apologies, it seems like there's an issue here on our end."
+            except HTTPError as e:
+                print("Http error occured: ", e)
                 return_str = "Apologies, it seems like there's an issue here on our end."
-        elif valid_us_state==False:
-            return_str = "Please enter a valid US state."
+            except InvalidHeader as e:
+                print("There was an invalid header: ", e)
+                return_str = "Apologies, it seems like there's an issue here on our end."
+            except InvalidURL as e:
+                print("There was an issue with the URL validity: ", e)
+                return_str = "Apologies, it seems like there's an issue here on our end."
+            
+            #no API call was made because we caught an issue with input
+            if valid_us_state==False:
+                return_str = "Please enter a valid US state."
+            else:
+                return_str = "Looks like some input was not valid"
+        
+        #very unlikely scenario where niether all_input_valid nor no_input_valid resolved to True
         else:
-            return_str = "Looks like some input was not valid"
-    else:
-        return_str = "Seems like there's some weirdness here on our end."       
+            return_str = "Seems like there's some weirdness here on our end."       
     
     return render_template("response_area.html", response=return_str)
 
