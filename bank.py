@@ -124,6 +124,8 @@ def apply():
             except InvalidURL as e:
                 print("There was an issue with the URL validity: ", e)
                 return_str = "Apologies, it seems like there's an issue here on our end."
+        elif valid_us_state==False:
+            return_str = "Please enter a valid US state code."
         #very unlikely scenario where niether all_input_valid nor no_input_valid resolved to True
         else:
             return_str = "Seems like there's some weirdness here on our end."       
