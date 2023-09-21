@@ -58,3 +58,11 @@ textarea {
 #penultimate_input {
     border-bottom-right-radius: 5px;
 }
+
+@media (max-width: 500px) {
+    #content-area {
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+}
