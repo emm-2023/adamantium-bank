@@ -59,7 +59,7 @@ textarea {
     border-bottom-right-radius: 5px;
 }
 
-@media (max-width: 800px) {
+@media only screen and (min-width: 390px) and (max-width: 390px) and (min-height: 844px) and (max-height: 844px) {
     #content-area {
         margin-left: 5%;
         margin-right: 5%;
