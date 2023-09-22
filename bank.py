@@ -85,6 +85,15 @@ def apply():
         valid_dob = is_valid_dob(form_data['dob'])
         valid_country_code = is_valid_country(form_data['addresscountry'])
         
+        ###
+        # this can be refactored and optimized. 
+        # This should move through a list of "keyname": form_data['keyname'],
+        # passing each key:value to a function that contains a match:case block.
+        # the match:case block should, depending on the keyname, validate the 
+        # form_data['keyname'] against the requisite regex pattern, and then return
+        # the boolean. the validations_list should still be a list of 
+        # [False,True,False...] etc.
+        ###
         validations_list = [v for v in [valid_us_state,valid_zip_code,valid_ssn,valid_email,valid_dob,valid_country_code]]
         
         #is the input all valid?
