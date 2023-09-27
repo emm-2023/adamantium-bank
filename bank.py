@@ -96,6 +96,13 @@ def apply():
         # the boolean. the validations_list should still be a list of 
         # [False,True,False...] etc.
         ###
+
+        ###
+        # if this application were refactored using FastAPI, i think a lot of this validation work
+        # could be handled by FastAPI's built-in use of Pydantic models (https://docs.pydantic.dev/latest/).
+        # Going on this, there should probably be an Application model `class Application(BaseMdel)`
+        # where the fields are defined. 
+        ###
         validations_list = [v for v in [valid_us_state,valid_zip_code,valid_ssn,valid_email,valid_dob,valid_country_code]]
         
         #is the input all valid?
