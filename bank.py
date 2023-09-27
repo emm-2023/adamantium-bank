@@ -37,7 +37,9 @@ def is_valid_country(country):
     pattern = r'[uU][sS]'
     return bool(re.match(pattern,country))
 
-#make API call to evaluations endpoint
+# make API call to evaluations endpoint
+# if this application was refactored using FastAPI [https://fastapi.tiangolo.com]
+# we could make this function asyncronous. Flask requires it to be syncronous.
 def evaluation_get(data_body):
     url = alloy_base_url
     #a dict
