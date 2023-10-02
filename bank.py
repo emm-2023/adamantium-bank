@@ -75,6 +75,7 @@ def index():
 def apply():
     return_str = ''
     if request.method=="POST":
+        #'request' here is an object of type Request containing all the data of the request we'll need
         form_data = request.form.to_dict()
 
         #some input validations
