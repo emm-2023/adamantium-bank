@@ -4,6 +4,7 @@ from waitress import serve
 from requests.exceptions import HTTPError, InvalidHeader, InvalidURL
 
 app = Flask(__name__)
+#heroku will need port 8000
 port = int(os.environ.get("PORT", 8000))
 #a US states convenience
 states = [state.abbr for state in us.states.STATES]
@@ -65,8 +66,6 @@ def evaluation_get(data_body):
     response = requests.request("POST",url,headers=headers,data=payload_to_json)
     return response
     
-
-
 
 @app.route('/')
 def index():
